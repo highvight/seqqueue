@@ -1,6 +1,6 @@
 # SeqQueue
 
-Python queue implementations for incrementally indexed, sequential data. SeqQueue makes any `get()` call returnes the next `(index, item)` pair from the queue.
+Python queue implementations for incrementally indexed, sequential data. SeqQueue makes sure any `get()` call returnes the next `(index, item)` pair from the queue.
 
 For now, SeqQeue is only Thread-safe, but I'm working on a Process-safe implementation as well.
 ## Installation
