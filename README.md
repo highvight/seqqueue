@@ -5,6 +5,10 @@ Python queue implementations for incrementally indexed, sequential data. SeqQueu
 For now, SeqQeue is only Thread-safe, but I'm working on a Process-safe implementation as well.
 ## Installation
 
+```bash
+pip3 install seqqueue
+```
+
 Install from source:
 ```bash
 git clone https://github.com/highvight/seqqueue
