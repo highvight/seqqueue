@@ -1,24 +1,25 @@
+import multiprocessing
+from queue import Empty, Full
 from threading import Thread
 from time import sleep
 from timeit import default_timer
 
 import pytest
 
-from queue import Full, Empty
 from seqqueue import SeqQueue
 
 __author__ = "Adrian Krueger"
 __copyright__ = "Adrian Krueger"
 __license__ = "MIT"
 
-Q_TYPES = [SeqQueue]
+Q_TYPES = [SeqQueue, multiprocessing.Manager().SeqQueue]
 MAXSIZES = [0, 2, 10]
 N_ITEMS = 1000
 N_INTERMEDIATE_QUEUES = 10
 N_THREADS_PER_QUEUE = 10
 MAX_WAIT_TIME_SECONDS = 100
 
-stop_object = object()
+stop_object = -1
 
 
 def _put_to_next_q(src_q, target_q):
@@ -95,11 +96,11 @@ def test_random_maxsize(q_type, maxsize):
         thread.start()
 
     start = default_timer()
-    while len(qs[-1].queue) != len(items):
-        print(qs[-1].queue)
+    while qs[-1].qsize() != len(items):
         assert default_timer() - start < MAX_WAIT_TIME_SECONDS, "Test timeout!"
         sleep(0.1)
 
     for thread in threads:
         assert not thread.is_alive(), "Threads should be shut down"
-    assert list(qs[-1].queue) == items, "The final q got mixed up!"
+    for i in range(len(items)):
+        assert qs[-1].get() == items[i], "The final q got mixed up!"
