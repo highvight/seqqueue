@@ -9,6 +9,12 @@ except PackageNotFoundError:  # pragma: no cover
 finally:
     del version, PackageNotFoundError
 
+from multiprocessing.managers import SyncManager
+
 from seqqueue.seqthreadqueue import SeqQueue
 
-__all__ = ["SeqQueue",]
+SyncManager.register("SeqQueue", SeqQueue)
+
+__all__ = [
+    "SeqQueue",
+]
