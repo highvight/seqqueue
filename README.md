@@ -2,7 +2,6 @@
 
 Python queue implementations for incrementally indexed, sequential data. SeqQueue makes sure any `get()` call returnes the next `(index, item)` pair from the queue.
 
-For now, SeqQeue is only Thread-safe, but I'm working on a Process-safe implementation as well.
 ## Installation
 
 ```bash
@@ -47,6 +46,17 @@ q.put((1,"1"))
 print(q.qsize())  # 1
 q.get(block=False)  #  Raises Empty, index=0 not available
 q.put((2,"2"), block=False)  #  Raises Full, index=2 > maxindex
+```
+
+For multiprocessing, use `multiprocessing.Manager`
+
+```python
+import multiprocessing as mp
+
+from seqqueue import SeqQueue
+
+manager = mp.Manager()
+q = manager.SeqQueue(start_index=0)
 ```
 
 ## Benchmark
