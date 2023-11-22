@@ -60,7 +60,7 @@ class SeqQueue(Queue):
                         if not self._slot_empty(index):
                             # Remove the condition from the waiters
                             cond_index = self._waiting_to_put.index((index, slot_empty))
-                            self._waiting_to_put[cond_index] = self._waiting_to_put[-1]
+                            self._waiting_to_put.pop(cond_index)
                             # Re-heapify waiter queue
                             heapify(self._waiting_to_put)
                             raise Full

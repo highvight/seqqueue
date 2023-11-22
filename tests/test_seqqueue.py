@@ -73,6 +73,19 @@ def test_timeout(q_type):
 
 
 @pytest.mark.parametrize("q_type", Q_TYPES)
+def test_timeout_put_twice(q_type):
+    q = q_type(maxsize=1)
+    q.put((0, "0"), timeout=0.1)
+    with pytest.raises(Full):
+        q.put((1, "1"), timeout=0.1)
+    with pytest.raises(Full):
+        q.put((1, "1"), timeout=0.1)
+    q.get()
+    q.put((1, "1"), timeout=0.1)
+    assert q.get() == (1, "1")
+
+
+@pytest.mark.parametrize("q_type", Q_TYPES)
 @pytest.mark.parametrize("maxsize", MAXSIZES)
 def test_random_maxsize(q_type, maxsize):
     items = [(i, "i") for i in range(N_ITEMS)]
