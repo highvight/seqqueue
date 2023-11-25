@@ -16,3 +16,9 @@ Version 0.3
 ===========
 
 - Multi-processing support with multiprocessing.Manager
+
+Version 0.4
+===========
+
+- Bugfix of put operations with timeout.
+- Added Github workflpows for release and packaging.
